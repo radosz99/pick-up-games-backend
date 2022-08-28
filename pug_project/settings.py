@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
 
     # Local
-    'backend.apps.BackendConfig'
+    'backend'
 ]
 
 REST_FRAMEWORK = {
