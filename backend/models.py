@@ -1,4 +1,7 @@
+import django
 from django.db import models
+
+from datetime import datetime
 
 
 class Address(models.Model):
@@ -32,6 +35,7 @@ class Court(models.Model):
     name = models.CharField(max_length=100)
     address = models.ForeignKey(Address, on_delete=models.CASCADE)
     details = models.ForeignKey(CourtDetails, on_delete=models.CASCADE)
+    created = models.DateTimeField(default=django.utils.timezone.now)
 
 
 class PlayingTimeFrame(models.Model):
@@ -39,6 +43,7 @@ class PlayingTimeFrame(models.Model):
     end = models.DateTimeField()
     player_nick = models.CharField(max_length=20)
     court = models.ForeignKey(Court, on_delete=models.CASCADE)
+    created = models.DateTimeField(default=django.utils.timezone.now)
 
 
 class Comment(models.Model):

@@ -1,8 +1,8 @@
 from django.urls import path
 
-from .views import ListCourt, DetailCourt
+from .views import CourtViews
 
 urlpatterns = [
-    path('<int:pk>/', DetailCourt.as_view()),
-    path('', ListCourt.as_view())
+    path('courts/<int:id>/', CourtViews.as_view()),
+    path('courts', CourtViews.as_view())
 ]

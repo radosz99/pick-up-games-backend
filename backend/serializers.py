@@ -20,7 +20,7 @@ class CourtSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Court
-        fields = ('id', 'name', 'address', 'details')
+        fields = ('id', 'name', 'address', 'details', 'created')
 
 
 
