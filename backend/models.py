@@ -13,6 +13,9 @@ class Address(models.Model):
     longitude = models.FloatField()
     street_number = models.CharField(max_length=20)
 
+    def __str__(self):
+        return str(self.__dict__)
+
 
 class CourtDetails(models.Model):
     class SurfaceType(models.TextChoices):
@@ -30,12 +33,18 @@ class CourtDetails(models.Model):
     lightning = models.BooleanField()
     surface = models.CharField(choices=SurfaceType.choices, default=SurfaceType.OTHER, max_length=20)
 
+    def __str__(self):
+        return str(self.__dict__)
+
 
 class Court(models.Model):
     name = models.CharField(max_length=100)
-    address = models.ForeignKey(Address, on_delete=models.CASCADE)
-    details = models.ForeignKey(CourtDetails, on_delete=models.CASCADE)
+    address = models.ForeignKey(Address, on_delete=models.CASCADE, null=True, blank=True)
+    details = models.ForeignKey(CourtDetails, on_delete=models.CASCADE, null=True, blank=True)
     created = models.DateTimeField(default=django.utils.timezone.now)
+
+    def __str__(self):
+        return str(self.__dict__)
 
 
 class PlayingTimeFrame(models.Model):
