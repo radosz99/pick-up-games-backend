@@ -1,0 +1,35 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres
+    container_name: db
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    networks:
+      - djangonetwork
+  web:
+    build: .
+    command: poetry run python manage.py runserver 0.0.0.0:8121
+    volumes:
+      - .:/code
+    ports:
+      - "8121:8121"
+    environment:
+      - POSTGRES_NAME=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    depends_on:
+      - db
+    links:
+      - db:db
+    networks:
+      - djangonetwork
+networks:
+  djangonetwork:
+    driver: bridge
+
