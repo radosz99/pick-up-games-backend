@@ -1,15 +1,17 @@
-Back-end for project
-
-## Documentation
-### Get courts
+# Installation 
+soon
+# Deployment
+soon
+#  Documentation
+## Get courts
 api_path = `/api/v1/court`  
 method = `GET`
 
-### Get specific court
+## Get specific court
 api_path = `/api/v1/court/<id>`  
 method = `GET`
 
-### Create court object
+## Create court object
 api_path = `/api/v1/court/` (trailing slash is important)  
 method = `POST`  
 body:
@@ -34,6 +36,6 @@ body:
 }
 ```
 
-### Get surface types
+## Get surface types
 api_path = `/api/v1/surface`  
 method = `GET`
