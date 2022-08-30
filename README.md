@@ -1,17 +1,22 @@
-# Installation 
-soon
 # Deployment
-1. Enter application container:
+1. Clone project and get to root directory;
+```
+$ git clone https://github.com/radosz99/pick-up-games-backend.git && cd pick-up-games-backend
+```
+2. Run `docker-compose` as a daemon:
+```
+$ docker-compose up -d
+```
+3. Enter application container:
 ```
 $ docker exec -it <container_id> sh
 ```
-2. Make migrations:
+4. Make migrations:
 ```
 $ poetry run python manage.py migrate
 ```
 
 # Cheatsheet
-##
 1. Enter container - `docker exec -it <container_id> sh`
 2. Connect to psql - `psql -U pug`
 3. Connect to the database - `\c pug`
