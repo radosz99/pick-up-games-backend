@@ -1,9 +1,18 @@
 Back-end for project
 
 ## Documentation
+### Get courts
+api_path = `/api/v1/court`  
+method = `GET`
+
+### Get specific court
+api_path = `/api/v1/court/<id>`  
+method = `GET`
+
 ### Create court object
-api_path = `/api/v1/courts`  
-method = `POST`
+api_path = `/api/v1/court/` (trailing slash is important)  
+method = `POST`  
+body:
 ```
 {
     "name": "xd",
@@ -24,3 +33,7 @@ method = `POST`
     }
 }
 ```
+
+### Get surface types
+api_path = `/api/v1/surface`  
+method = `GET`
