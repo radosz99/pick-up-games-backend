@@ -2,19 +2,19 @@ from rest_framework import serializers
 from .models import Court, Address, CourtDetails
 
 
-class AddressSerializer(serializers.HyperlinkedModelSerializer):
+class AddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = Address
         fields = ('country', 'city', 'street_name', 'postal_code', 'latitude', 'longitude', 'street_number')
 
 
-class CourtDetailsSerializer(serializers.HyperlinkedModelSerializer):
+class CourtDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = CourtDetails
         fields = ('courts_number', 'hoops_number', 'lightning', 'surface')
 
 
-class CourtSerializer(serializers.HyperlinkedModelSerializer):
+class CourtSerializer(serializers.ModelSerializer):
     address = AddressSerializer()
     details = CourtDetailsSerializer()
 
