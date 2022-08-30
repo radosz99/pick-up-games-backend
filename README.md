@@ -1,7 +1,21 @@
 # Installation 
 soon
 # Deployment
-soon 
+1. Enter application container:
+```
+$ docker exec -it <container_id> sh
+```
+2. Make migrations:
+```
+$ poetry run python manage.py migrate
+```
+
+# Cheatsheet
+##
+1. Enter container - `docker exec -it <container_id> sh`
+2. Connect to psql - `psql -U pug`
+3. Connect to the database - `\c pug`
+4. Show tables - `\dt`
 #  Documentation
 ## Get courts
 api_path = `/api/v1/court`  
@@ -39,3 +53,5 @@ body:
 ## Get surface types
 api_path = `/api/v1/surface`  
 method = `GET`
+
+

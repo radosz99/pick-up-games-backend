@@ -201,7 +201,7 @@ celerybeat-schedule
 venv/
 ENV/
 
-docker-compose.yml
+data/
 
 # Spyder project settings
 .spyderproject
