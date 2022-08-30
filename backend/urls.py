@@ -1,8 +1,11 @@
-from django.urls import path
-from .api.courts import CourtViews
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .api.courts import CourtViewSet
 
+
+router = DefaultRouter()
+router.register(r'court', CourtViewSet, basename='court')
 
 urlpatterns = [
-    path('courts/<int:id>/', CourtViews.as_view()),
-    path('courts', CourtViews.as_view()),
+    path('', include(router.urls))
 ]

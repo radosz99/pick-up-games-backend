@@ -22,7 +22,6 @@ class CourtSerializer(serializers.HyperlinkedModelSerializer):
         model = Court
         fields = ('id', 'name', 'address', 'details', 'created')
 
-
     def create(self, validated_data):
         address = validated_data.pop('address', None)
         details = validated_data.pop('details', None)
