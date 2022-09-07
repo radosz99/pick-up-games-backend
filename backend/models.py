@@ -1,8 +1,6 @@
 import django
 from django.db import models
 
-from datetime import datetime
-
 
 class Address(models.Model):
     country = models.CharField(max_length=50)  # consider Enum for countries
@@ -39,8 +37,8 @@ class CourtDetails(models.Model):
 
 class Court(models.Model):
     name = models.CharField(max_length=100)
-    address = models.ForeignKey(Address, on_delete=models.CASCADE, null=True, blank=True)
-    details = models.ForeignKey(CourtDetails, on_delete=models.CASCADE, null=True, blank=True)
+    address = models.ForeignKey(Address, on_delete=models.CASCADE, null=True, blank=True, related_name='court_address')
+    details = models.ForeignKey(CourtDetails, on_delete=models.CASCADE, null=True, blank=True, related_name='court_details')
     created = models.DateTimeField(default=django.utils.timezone.now)
 
     def __str__(self):
@@ -51,19 +49,22 @@ class PlayingTimeFrame(models.Model):
     start = models.DateTimeField()
     end = models.DateTimeField()
     player_nick = models.CharField(max_length=20)
-    court = models.ForeignKey(Court, on_delete=models.CASCADE)
+    court = models.ForeignKey(Court, on_delete=models.CASCADE, related_name='timeframes')
     created = models.DateTimeField(default=django.utils.timezone.now)
+
+    def __str__(self):
+        return str(self.__dict__)
 
 
 class Comment(models.Model):
     content = models.TextField()
     creation_date = models.DateTimeField()
-    court = models.ForeignKey(Court, on_delete=models.CASCADE)
+    court = models.ForeignKey(Court, on_delete=models.CASCADE, related_name='court_comment')
 
 
 class Rating(models.Model):
     stars = models.FloatField()
-    court = models.ForeignKey(Court, on_delete=models.CASCADE)
+    court = models.ForeignKey(Court, on_delete=models.CASCADE, related_name='court_rating')
     creation_date = models.DateTimeField()
 
 

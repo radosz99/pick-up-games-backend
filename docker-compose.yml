@@ -13,7 +13,9 @@ services:
 
   web:
     build: .
-    command: poetry run gunicorn --bind 0.0.0.0:8121 pug_project.wsgi
+    container_name: backend-pug
+    command: >
+      sh -c "poetry run python manage.py migrate && poetry run python manage.py makemigrations && poetry run gunicorn --bind 0.0.0.0:8121 pug_project.wsgi"
     volumes:
       - .:/code
     ports:
@@ -24,6 +26,3 @@ services:
       - POSTGRES_PASSWORD=LhKWySLgbfRxtxn
     depends_on:
       - db
-    links:
-      - db:db
-

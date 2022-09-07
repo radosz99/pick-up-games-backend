@@ -12,14 +12,6 @@ $ git clone https://github.com/radosz99/pick-up-games-backend.git && cd pick-up-
 ```
 $ docker-compose up -d
 ```
-3. Enter application container:
-```
-$ docker exec -it <container_id> sh
-```
-4. Make migrations:
-```
-$ poetry run python manage.py migrate
-```
 
 # Cheatsheet
 1. Enter container - `docker exec -it <container_id> sh`
@@ -65,3 +57,32 @@ api_path = `/api/v1/surface`
 method = `GET`
 
 
+## Insert timeframe
+api_path = `/api/v1/timeframe/`  
+method = `POST`
+body:
+```
+{
+    "player_nick": "pietrus",
+    "start": 1663164000,
+    "end": 1663171200,
+    "court": 1
+}
+```
+
+## Get frequency in specific range
+api_path = `/api/v1/court/<court_id>/timeframes`  
+method = `GET`  
+query_params = `start` and `end` (both unix timestamps)  
+exemplary_path = `/api/v1/court/1/timeframes?start=1662393600&end=1662400800`
+response:
+```
+{
+    "frequency": {
+        "09/05/2022, 16:00": 0,
+        "09/05/2022, 16:30": 0,
+        "09/05/2022, 17:00": 0,
+        "09/05/2022, 17:30": 0
+    }
+}
+```
