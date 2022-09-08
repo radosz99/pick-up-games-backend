@@ -15,4 +15,4 @@ class CourtViewSet(ModelViewSet):
     @action(detail=True, url_path='timeframes', methods=['get'])
     def get_timeframes(self, request, pk=None):
         data = court_service.get_timeframes_frequency(pk, self.request)
-        return Response(({'frequency': data}))
+        return Response(data)
