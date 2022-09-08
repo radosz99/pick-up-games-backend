@@ -79,7 +79,7 @@ response:
 ```
 {
     "frequency": {
-        "09/05/2022, 16:00": 0,
+        "09/05/2022, 16:00": 0, (it means that in range 16:00 - 16:30 there will 0 players on specific court)
         "09/05/2022, 16:30": 0,
         "09/05/2022, 17:00": 0,
         "09/05/2022, 17:30": 0
