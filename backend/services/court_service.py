@@ -10,14 +10,13 @@ utc = pytz.UTC
 
 def get_timeframes_frequency(court_id, request):
     court = Court.objects.get(id=court_id)
-    start = request.query_params.get('start')
-    end = request.query_params.get('end')
-    start_date = convert_unix_timestamp_to_date(start)
-    end_date = convert_unix_timestamp_to_date(end)
-    start_date = round_date(start_date, RoundType.DOWN)
-    end_date = round_date(end_date, RoundType.UP)
+    logging.debug(f"Looking for timeframes frequency for court with id {court_id} and name {court.name}")
+    start_date, end_date = parse_dates_from_request(request)
+    logging.debug(f"Dates given by user - start: {start_date}, end: {end_date}")
     intervals = get_30_minutes_intervals_dict_between_two_dates(start_date, end_date)
-    for timeframe in court.timeframes.all():
+    court_timeframes = court.timeframes.all()
+    logging.debug(f"Court has a total of {len(court_timeframes)} timeframes")
+    for timeframe in court_timeframes:
         logging.debug(f"Checking timeframe - {timeframe}")
         for interval in intervals:
             logging.debug(f"Checking interval - {interval} + 30 minutes if it fits in timeframe")
@@ -26,6 +25,14 @@ def get_timeframes_frequency(court_id, request):
                 logging.debug("Interval fits, so the value will be incremented")
                 intervals[convert_date_to_date_string(interval)] += 1
     return intervals
+
+
+def parse_dates_from_request(request):
+    start = request.query_params.get('start')
+    end = request.query_params.get('end')
+    start_date = convert_unix_timestamp_to_date(start)
+    end_date = convert_unix_timestamp_to_date(end)
+    return round_date(start_date, RoundType.DOWN), round_date(end_date, RoundType.UP)
 
 
 def check_if_interval_is_between_two_dates(interval, start_date, end_date):
@@ -38,11 +45,12 @@ def check_if_interval_is_between_two_dates(interval, start_date, end_date):
 
 
 def get_30_minutes_intervals_dict_between_two_dates(start_date, end_date):
-    logging.debug(f"Looking for frequency between {start_date} and {end_date}")
+    logging.debug(f"Looking for intervals between {start_date} and {end_date}")
     intervals = {}
     while end_date > start_date:
         intervals[convert_date_to_date_string(start_date)] = 0
         start_date = start_date + timedelta(minutes=30)
+    logging.debug(f"Created list of intervals - {intervals}")
     return intervals
 
 

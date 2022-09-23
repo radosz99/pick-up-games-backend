@@ -22,7 +22,7 @@ class CourtSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Court
-        fields = ('id', 'name', 'address', 'details', 'created')
+        fields = ('id', 'name', 'address', 'details', 'created', 'expected_players_number', 'actual_players_number')
 
     def create(self, validated_data):
         address = validated_data.pop('address', None)

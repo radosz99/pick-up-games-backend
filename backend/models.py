@@ -40,6 +40,8 @@ class Court(models.Model):
     address = models.ForeignKey(Address, on_delete=models.CASCADE, null=True, blank=True, related_name='court_address')
     details = models.ForeignKey(CourtDetails, on_delete=models.CASCADE, null=True, blank=True, related_name='court_details')
     created = models.DateTimeField(default=django.utils.timezone.now)
+    expected_players_number = models.IntegerField(default=0)
+    actual_players_number = models.IntegerField(default=0)
 
     def __str__(self):
         return str(self.__dict__)
