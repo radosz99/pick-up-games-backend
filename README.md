@@ -48,13 +48,25 @@ body:
         "surface": "Dirt",
         "courts_number": 2,
         "hoops_number": 4,
-        "lightning": false
+        "lightning": false,
+        "type": "Indoor",
+        "public": false,
+        "rim_type": "Higher"
     }
 }
 ```
 
-## Get surface types
+## Get court details choices
+### Surface
 api_path = `/api/v1/surface`  
+method = `GET`
+
+### Rim type
+api_path = `/api/v1/rim`  
+method = `GET`
+
+### Court type
+api_path = `/api/v1/type`  
 method = `GET`
 
 
