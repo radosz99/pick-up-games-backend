@@ -84,8 +84,12 @@ class Rating(models.Model):
     creation_date = models.DateTimeField()
 
 
+def upload_to(instance, filename):
+    return 'images/{filename}'.format(filename=filename)
+
+
 class CourtImage(models.Model):
-    image = models.ImageField(upload_to='uploads/')
+    image = models.ImageField(upload_to=upload_to)
     court = models.ForeignKey(Court, on_delete=models.CASCADE)
 
 

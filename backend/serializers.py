@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Court, Address, CourtDetails, PlayingTimeFrame
+from .models import Court, Address, CourtDetails, PlayingTimeFrame, CourtImage
 from .services.court_service import convert_unix_timestamp_to_date
 import logging
 
@@ -14,6 +14,13 @@ class CourtDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = CourtDetails
         fields = ('courts_number', 'hoops_number', 'lightning', 'surface', 'type', 'public', 'rim_type')
+
+
+class ImageSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = CourtImage
+        fields = ('id', 'court', 'image')
 
 
 class CourtSerializer(serializers.ModelSerializer):

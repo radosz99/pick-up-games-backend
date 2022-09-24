@@ -5,7 +5,7 @@ from rest_framework import status
 
 from ..models import Court
 from ..serializers import CourtSerializer
-from ..services import court_service
+from ..services import court_service, image_service
 
 
 class CourtViewSet(ModelViewSet):
@@ -16,6 +16,11 @@ class CourtViewSet(ModelViewSet):
     @action(detail=True, url_path='timeframes', methods=['get'])
     def get_timeframes(self, request, pk=None):
         data = court_service.get_timeframes_frequency(pk, self.request)
+        return Response(data)
+
+    @action(detail=True, url_path='images', methods=['get'])
+    def get_images(self, request, pk=None):
+        data = image_service.get_court_images(pk)
         return Response(data)
 
     def destroy(self, *args, **kwargs):
