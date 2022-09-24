@@ -13,7 +13,7 @@ class AddressSerializer(serializers.ModelSerializer):
 class CourtDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = CourtDetails
-        fields = ('courts_number', 'hoops_number', 'lightning', 'surface')
+        fields = ('courts_number', 'hoops_number', 'lightning', 'surface', 'type', 'public', 'rim_type')
 
 
 class CourtSerializer(serializers.ModelSerializer):

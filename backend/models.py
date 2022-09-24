@@ -26,10 +26,24 @@ class CourtDetails(models.Model):
         WOOD = 'Wood'
         OTHER = 'Other'
 
+    class CourtType(models.TextChoices):
+        INDOOR = 'Indoor'
+        OUTDOOR = 'Outdoor'
+
+    class RimType(models.TextChoices):
+        HIGHER = 'Higher'
+        LOWER = 'Lower'
+        NORMAL = 'Normal'
+        VARIOUS = 'Various'
+
     courts_number = models.IntegerField()
     hoops_number = models.IntegerField()
-    lightning = models.BooleanField()
+    lightning = models.BooleanField(default=False)
     surface = models.CharField(choices=SurfaceType.choices, default=SurfaceType.OTHER, max_length=20)
+    type = models.CharField(choices=CourtType.choices, default=CourtType.OUTDOOR, max_length=10)
+    public = models.BooleanField(default=True)
+    rim_type = models.CharField(choices=RimType.choices, default=RimType.NORMAL, max_length=10)
+
 
     def __str__(self):
         return str(self.__dict__)
