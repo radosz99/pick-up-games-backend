@@ -17,7 +17,7 @@ services:
     build: .
     container_name: backend-pug
     command: >
-      sh -c "poetry run python manage.py migrate --fake && poetry run python manage.py makemigrations && poetry run gunicorn --bind 0.0.0.0:8122 pug_project.wsgi"
+      sh -c "poetry run python manage.py migrate backend && poetry run python manage.py makemigrations && poetry run gunicorn --bind 0.0.0.0:8122 pug_project.wsgi"
     ports:
       - "8122:8122"
     environment:
