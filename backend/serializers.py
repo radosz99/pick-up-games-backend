@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import Court, Address, CourtDetails, PlayingTimeFrame, CourtImage
-from .services.court_service import convert_unix_timestamp_to_date
+from .services.court_service import convert_unix_timestamp_to_date, calculate_distance
 import logging
 
 
@@ -26,10 +26,20 @@ class ImageSerializer(serializers.ModelSerializer):
 class CourtSerializer(serializers.ModelSerializer):
     address = AddressSerializer()
     details = CourtDetailsSerializer()
+    distance = serializers.SerializerMethodField('calculate_distance')
+
+    def calculate_distance(self, obj):
+        latitude = self.context.get('lat')
+        longitude = self.context.get('lon')
+        if latitude is None or longitude is None:
+            return 0
+        court_latitude = obj.address.latitude
+        court_longitude = obj.address.longitude
+        return calculate_distance(latitude, longitude, court_latitude, court_longitude)
 
     class Meta:
         model = Court
-        fields = ('id', 'name', 'address', 'details', 'created', 'expected_players_number', 'actual_players_number')
+        fields = ('id', 'name', 'address', 'details', 'created', 'expected_players_number', 'actual_players_number', 'distance')
 
     def create(self, validated_data):
         address = validated_data.pop('address', None)
@@ -53,9 +63,6 @@ class TimeFrameSerializer(serializers.ModelSerializer):
         end = validated_data.pop('end')
         start = convert_unix_timestamp_to_date(start)
         end = convert_unix_timestamp_to_date(end)
-        logging.debug(start)
-        logging.debug(end)
         court = validated_data.pop('court')
-        logging.debug(validated_data)
         timeframe_instance = PlayingTimeFrame.objects.create(start=start, end=end, court_id=court.id, **validated_data)
         return timeframe_instance

@@ -3,6 +3,7 @@ import logging
 from enum import Enum
 import pytz
 
+from ..exceptions import InvalidRequestException
 from ..models import Court
 
 utc = pytz.UTC
@@ -30,6 +31,8 @@ def get_timeframes_frequency(court_id, request):
 def parse_dates_from_request(request):
     start = request.query_params.get('start')
     end = request.query_params.get('end')
+    if start is None or end is None:
+        raise InvalidRequestException("Request should contain both 'start' and 'end' query params")
     start_date = convert_unix_timestamp_to_date(start)
     end_date = convert_unix_timestamp_to_date(end)
     return round_date(start_date, RoundType.DOWN), round_date(end_date, RoundType.UP)
@@ -89,3 +92,19 @@ def round_date(date, round_type):
         else:
             date = date.replace(minute=0)
     return date
+
+
+def calculate_distance(lat_1, lon_1, lat_2, lon_2):
+    from math import sin, cos, sqrt, atan2, radians
+    # approximate radius of earth in km
+    R = 6373.0
+    lat1 = radians(lat_1)
+    lon1 = radians(lon_1)
+    lat2 = radians(lat_2)
+    lon2 = radians(lon_2)
+    dlon = lon2 - lon1
+    dlat = lat2 - lat1
+    a = sin(dlat / 2) ** 2 + cos(lat1) * cos(lat2) * sin(dlon / 2) ** 2
+    c = 2 * atan2(sqrt(a), sqrt(1 - a))
+    distance = R * c
+    return distance

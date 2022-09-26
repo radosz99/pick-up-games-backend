@@ -1,3 +1,6 @@
+import logging
+import json
+
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
 from rest_framework.decorators import action
@@ -6,17 +9,33 @@ from rest_framework import status
 from ..models import Court
 from ..serializers import CourtSerializer
 from ..services import court_service, image_service
+from ..pagination import StandardResultsSetPagination
+from ..exceptions import InvalidRequestException
 
 
 class CourtViewSet(ModelViewSet):
     serializer_class = CourtSerializer
     queryset = Court.objects.all()
+    pagination_class = StandardResultsSetPagination
     http_method_names = ['get', 'post', 'delete']
+
+    def list(self, request, *args, **kwargs):
+        queryset = Court.objects.all()
+        latitude = float(request.query_params.get('lat'))
+        longitude = float(request.query_params.get('lon'))
+        serializer = self.get_serializer(queryset, many=True, context={'lat': latitude, 'lon': longitude})
+        serializer_data = sorted(
+            serializer.data, key=lambda k: k['distance'], reverse=False)
+        page = self.paginate_queryset(serializer_data)
+        return self.get_paginated_response(page)
 
     @action(detail=True, url_path='timeframes', methods=['get'])
     def get_timeframes(self, request, pk=None):
-        data = court_service.get_timeframes_frequency(pk, self.request)
-        return Response(data)
+        try:
+            data = court_service.get_timeframes_frequency(pk, self.request)
+            return Response(data)
+        except InvalidRequestException as e:
+            return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
     @action(detail=True, url_path='images', methods=['get'])
     def get_images(self, request, pk=None):
