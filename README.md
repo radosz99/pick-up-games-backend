@@ -87,7 +87,7 @@ body:
 api_path = `/api/v1/court/<court_id>/timeframes`  
 method = `GET`  
 query_params = `start` and `end` (both unix timestamps)  
-exemplary_path = `/api/v1/court/1/timeframes?start=1662393600&end=1662400800`
+exemplary_path = `/api/v1/court/1/timeframes/?start=1662393600&end=1662400800`
 response:
 ```
 {
