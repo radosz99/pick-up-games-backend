@@ -20,8 +20,8 @@ $ docker-compose up -d
 3. Connect to the database - `\c pug`
 4. Show tables - `\dt`
 #  Documentation
-## Get courts
-api_path = `/api/v1/court`  
+## Get courts sorted by distance from given coordinats with pagination
+api_path = '/api/v1/court/?page=1&page_size=3&lat=56&lon=16.8`  
 method = `GET`
 
 ## Get specific court
