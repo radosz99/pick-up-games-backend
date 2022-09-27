@@ -26,8 +26,8 @@ method = `GET`
 api_path = `api/v1/court/`
 ### Query parameters:  
 `page`, `page_size` = optional, pagination info  
-`lat`, `lon` = optional, user coordinates from which distance to the court will be calculated    
-`order_by`, `reverse` = optional, sorting info   
+`lat`, `lon` = optional, user coordinates from which distance to the court is calculated    
+`order_by`, `reverse` = optional, ordering info   
 
 exemplary_api_path = `api/v1/court/?page=1&page_size=10&lat=56&lon=16.8&order_by=distance&reverse=True`
 
