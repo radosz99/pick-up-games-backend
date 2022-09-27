@@ -102,4 +102,16 @@ response:
         "09/05/2022, 17:30": 0
     }
 }
+
+```
+
+## Insert rating
+api_path = `/api/v1/rating/`  
+method = `POST`
+body:
+```
+{
+    "stars": 5.0,
+    "court": 1
+}
 ```
