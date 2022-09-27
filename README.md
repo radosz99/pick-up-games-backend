@@ -10,8 +10,7 @@ $ git clone https://github.com/radosz99/pick-up-games-backend.git && cd pick-up-
 ```
 2. Run `docker-compose` as a daemon:
 ```
-$ sudo docker-compose build web
-$ docker-compose up -d
+$ sudo docker-compose up -d --build
 ```
 
 # Cheatsheet
