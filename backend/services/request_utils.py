@@ -25,6 +25,7 @@ def validate_ip(model):
 
 
 def get_client_ip(request):
+    logging.debug(f"Request META - {request.META}")
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
     if x_forwarded_for:
         ip = x_forwarded_for.split(',')[0]
