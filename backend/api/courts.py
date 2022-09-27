@@ -30,7 +30,7 @@ class CourtViewSet(ModelViewSet):
             data = court_service.get_timeframes_frequency(pk, request)
             return Response(data)
         except InvalidRequestException as e:
-            return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"detail": str(e), "exception": e.__class__.__name__}, status=status.HTTP_400_BAD_REQUEST)
 
     @action(detail=True, url_path='images', methods=['get'])
     def get_images(self, request, pk=None):

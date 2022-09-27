@@ -25,13 +25,13 @@ class ImageSerializer(serializers.ModelSerializer):
 class RatingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Rating
-        fields = ('id', 'court', 'stars')
+        fields = ('id', 'court', 'stars', 'user_ip')
 
     def create(self, validated_data):
         logging.debug(f"Creating rating from - {validated_data}")
         stars = validated_data.pop('stars')
         court = validated_data.pop('court')
-        court_instance = Rating.objects.create(stars=stars, court_id=court.id)
+        court_instance = Rating.objects.create(stars=stars, court_id=court.id, **validated_data)
         return court_instance
 
 

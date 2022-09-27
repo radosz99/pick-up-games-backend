@@ -73,14 +73,16 @@ class PlayingTimeFrame(models.Model):
 
 class Comment(models.Model):
     content = models.TextField()
-    creation_date = models.DateTimeField()
+    creation_date = models.DateTimeField(default=django.utils.timezone.now)
     court = models.ForeignKey(Court, on_delete=models.CASCADE, related_name='court_comment')
+    user_ip = models.CharField(max_length=20, blank=True)
 
 
 class Rating(models.Model):
     stars = models.FloatField()
     court = models.ForeignKey(Court, on_delete=models.CASCADE)
     creation_date = models.DateTimeField(default=django.utils.timezone.now)
+    user_ip = models.CharField(max_length=20, blank=True)
 
 
 def upload_to(instance, filename):

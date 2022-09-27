@@ -106,7 +106,7 @@ response:
 ```
 
 ## Insert rating
-api_path = `/api/v1/rating/`  
+api_path = `/api/v1/rating/`
 method = `POST`
 body:
 ```

@@ -11,12 +11,6 @@ from ..constants import R
 utc = pytz.UTC
 
 
-def rate_court(court_id, request):
-    logging.debug(f"Trying to rate court with id {court_id}")
-    rating = parse_rating_from_request(request)
-    return {"stars": rating}
-
-
 def get_timeframes_frequency(court_id, request):
     court = Court.objects.get(id=court_id)
     logging.debug(f"Looking for timeframes frequency for court with id {court_id} and name {court.name}")
@@ -50,16 +44,6 @@ def get_courts_list(request, serializer):
         logging.debug("Parameters latitude or longitude not included in query params, returning normal list")
         serializer_data = serializer(queryset, many=True).data
         return serializer_data
-
-
-def parse_rating_from_request(request):
-    rating = request.query_params.get('rating')
-    if rating is None:
-        raise InvalidRequestException("Request should contain 'rating' query param")
-    try:
-        return float(rating)
-    except ValueError:
-        raise InvalidRequestException("`rating` param should be float")
 
 
 def parse_dates_from_request(request):
