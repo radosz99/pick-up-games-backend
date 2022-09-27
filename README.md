@@ -31,7 +31,7 @@ api_path = `api/v1/court/`
 
 exemplary_api_path = `api/v1/court/?page=1&page_size=10&lat=56&lon=16.8&order_by=distance&reverse=True`
 
-Note: If `lat` or `lon` parameters are not included, the list of courts is sorted randomly and the `distance` parameter is set to `-1`.  
+Note: If `lat` or `lon` parameters are not included, the `distance` parameter is set to `-1`.  
 
 Extra parameters in response:
 ```
