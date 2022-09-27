@@ -167,6 +167,13 @@ LOGGING = {
             'mode': 'w',
             'formatter': 'basic'
         },
+        'error_file': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'filename': 'error.log',
+            'mode': 'w',
+            'formatter': 'basic'
+        },
     },
     'root': {
         'handlers': ['debug_file'],
@@ -178,5 +185,9 @@ LOGGING = {
             'level': 'DEBUG',
             'propagate': False
         },
+        'error_logger': {
+            'handlers': ['error_file'],
+            'level': 'ERROR',
+        }
     },
 }

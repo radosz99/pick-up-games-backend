@@ -4,7 +4,7 @@ from rest_framework import status
 
 from ..models import Rating
 from ..serializers import RatingSerializer
-from ..services import request_utils
+from ..services import request_utils, court_service
 
 
 class RatingViewSet(ModelViewSet):

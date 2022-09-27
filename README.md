@@ -22,11 +22,23 @@ $ docker-compose up -d
 
 #  Documentation
 ## Get courts sorted by distance from given coordinates with pagination
-api_path = `/api/v1/court/?page=1&page_size=3&lat=56&lon=16.8`  
-method = `GET`
+method = `GET`  
+api_path = `api/v1/court/`
+### Query parameters:  
+`page`, `page_size` = optional, pagination info  
+`lat`, `lon` = optional, user coordinates from which distance to the court will be calculated    
+`order_by`, `reverse` = optional, sorting info   
 
-Parameter `distance` in response in each court object contains the distance from a court to the given coordinates in straight line.  
-Note: If `lat` or `lon` parameters are not included, the list of courts is sorted randomly and the `distance` parameter is set to `-1`.
+exemplary_api_path = `api/v1/court/?page=1&page_size=10&lat=56&lon=16.8&order_by=distance&reverse=True`
+
+Note: If `lat` or `lon` parameters are not included, the list of courts is sorted randomly and the `distance` parameter is set to `-1`.  
+
+Extra parameters in response:
+```
+    "distance": 222.78,
+    "rating": 5.8,
+    "ratings_number": 1
+```
 
 ## Get specific court
 api_path = `/api/v1/court/<id>/`  
@@ -87,11 +99,11 @@ body:
 }
 ```
 
-## Get frequency in specific range
+## Get playing timeframes frequency in specific range
 api_path = `/api/v1/court/<court_id>/timeframes`  
 method = `GET`  
 query_params = `start` and `end` (both unix timestamps)  
-exemplary_path = `/api/v1/court/1/timeframes/?start=1662393600&end=1662400800`
+exemplary_api_path = `/api/v1/court/1/timeframes/?start=1662393600&end=1662400800`
 response:
 ```
 {
