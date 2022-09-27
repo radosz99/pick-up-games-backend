@@ -43,6 +43,11 @@ Extra parameters in response:
 api_path = `/api/v1/court/<id>/`  
 method = `GET`
 
+### Query parameters:
+`lat`, `lon` = optional, user coordinates from which distance to the court is calculated  
+
+exemplary_api_path = `api/v1/court/7/?lat=56&lon=16.8`
+
 ## Create court object
 api_path = `/api/v1/court/` (trailing slash is important)  
 method = `POST`  

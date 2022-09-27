@@ -35,6 +35,12 @@ def sort_list(data, key, reverse=False):
     return sorted(data, key=lambda k: k[key], reverse=reverse)
 
 
+def get_court_with_distance(request, court, serializer):
+    latitude = parse_parameter_from_query_parameters(request, 'lat', DataType.FLOAT)
+    longitude = parse_parameter_from_query_parameters(request, 'lon', DataType.FLOAT)
+    return serializer(court, context={'lat': latitude, 'lon': longitude}).data
+
+
 def get_courts_list(request, serializer):
     queryset = Court.objects.all()
     logger.debug(f"Getting courts list, request query parameters = {request.query_params}")

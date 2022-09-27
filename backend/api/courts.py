@@ -27,6 +27,11 @@ class CourtViewSet(ModelViewSet):
             logger.error(traceback.format_exc())
             return Response({"detail": str(e), "exception": e.__class__.__name__}, status=status.HTTP_400_BAD_REQUEST)
 
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        data = court_service.get_court_with_distance(request, instance, self.serializer_class)
+        return Response(data)
+
     @action(detail=True, url_path='timeframes', methods=['get'])
     def get_timeframes(self, request, pk=None):
         try:
