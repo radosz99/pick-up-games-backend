@@ -29,7 +29,7 @@ Parameter `distance` in response in each court object contains the distance from
 Note: If `lat` or `lon` parameters are not included, the list of courts is sorted randomly and the `distance` parameter is set to `0`.
 
 ## Get specific court
-api_path = `/api/v1/court/<id>`  
+api_path = `/api/v1/court/<id>/`  
 method = `GET`
 
 ## Create court object
