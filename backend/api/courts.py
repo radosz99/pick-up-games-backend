@@ -1,13 +1,13 @@
-import logging
-import json
-
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
 from rest_framework.decorators import action
+from rest_framework import exceptions
 from rest_framework import status
 
+import logging
+
 from ..models import Court
-from ..serializers import CourtSerializer
+from ..serializers import CourtSerializer, RatingSerializer
 from ..services import court_service, image_service
 from ..pagination import StandardResultsSetPagination
 from ..exceptions import InvalidRequestException
@@ -27,7 +27,7 @@ class CourtViewSet(ModelViewSet):
     @action(detail=True, url_path='timeframes', methods=['get'])
     def get_timeframes(self, request, pk=None):
         try:
-            data = court_service.get_timeframes_frequency(pk, self.request)
+            data = court_service.get_timeframes_frequency(pk, request)
             return Response(data)
         except InvalidRequestException as e:
             return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)

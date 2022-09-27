@@ -11,6 +11,12 @@ from ..constants import R
 utc = pytz.UTC
 
 
+def rate_court(court_id, request):
+    logging.debug(f"Trying to rate court with id {court_id}")
+    rating = parse_rating_from_request(request)
+    return {"stars": rating}
+
+
 def get_timeframes_frequency(court_id, request):
     court = Court.objects.get(id=court_id)
     logging.debug(f"Looking for timeframes frequency for court with id {court_id} and name {court.name}")
@@ -32,21 +38,32 @@ def get_timeframes_frequency(court_id, request):
 
 def get_courts_list(request, serializer):
     queryset = Court.objects.all()
+    logging.debug("Getting courts list")
     try:
         # if request contains user coordinates then courts are sorted by distance from given coordinates
         latitude = float(request.query_params.get('lat'))
         longitude = float(request.query_params.get('lon'))
+        logging.debug(f"Getting courts sorted by distance from - lat = {latitude}, lon = {longitude}")
         serializer_data = serializer(queryset, many=True, context={'lat': latitude, 'lon': longitude}).data
         return sorted(serializer_data, key=lambda k: k['distance'], reverse=False)
-    except TypeError as e:
-        logging.debug(e)
+    except TypeError:
+        logging.debug("Parameters latitude or longitude not included in query params, returning normal list")
         serializer_data = serializer(queryset, many=True).data
         return serializer_data
 
 
+def parse_rating_from_request(request):
+    rating = request.query_params.get('rating')
+    if rating is None:
+        raise InvalidRequestException("Request should contain 'rating' query param")
+    try:
+        return float(rating)
+    except ValueError:
+        raise InvalidRequestException("`rating` param should be float")
+
+
 def parse_dates_from_request(request):
-    start = request.query_params.get('start')
-    end = request.query_params.get('end')
+    start, end = request.query_params.get('start'), request.query_params.get('end')
     if start is None or end is None:
         raise InvalidRequestException("Request should contain both 'start' and 'end' query params")
     start_date = convert_unix_timestamp_to_date(start)

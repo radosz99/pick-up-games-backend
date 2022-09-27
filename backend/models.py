@@ -80,8 +80,8 @@ class Comment(models.Model):
 
 class Rating(models.Model):
     stars = models.FloatField()
-    court = models.ForeignKey(Court, on_delete=models.CASCADE, related_name='court_rating')
-    creation_date = models.DateTimeField()
+    court = models.ForeignKey(Court, on_delete=models.CASCADE)
+    creation_date = models.DateTimeField(default=django.utils.timezone.now)
 
 
 def upload_to(instance, filename):
