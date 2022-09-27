@@ -5,6 +5,8 @@ import pytz
 
 from ..exceptions import InvalidRequestException
 from ..models import Court
+from ..constants import R
+
 
 utc = pytz.UTC
 
@@ -26,6 +28,20 @@ def get_timeframes_frequency(court_id, request):
                 logging.debug("Interval fits, so the value will be incremented")
                 intervals[convert_date_to_date_string(interval)] += 1
     return intervals
+
+
+def get_courts_list(request, serializer):
+    queryset = Court.objects.all()
+    try:
+        # if request contains user coordinates then courts are sorted by distance from given coordinates
+        latitude = float(request.query_params.get('lat'))
+        longitude = float(request.query_params.get('lon'))
+        serializer_data = serializer(queryset, many=True, context={'lat': latitude, 'lon': longitude}).data
+        return sorted(serializer_data, key=lambda k: k['distance'], reverse=False)
+    except TypeError as e:
+        logging.debug(e)
+        serializer_data = serializer(queryset, many=True).data
+        return serializer_data
 
 
 def parse_dates_from_request(request):
@@ -94,17 +110,18 @@ def round_date(date, round_type):
     return date
 
 
-def calculate_distance(lat_1, lon_1, lat_2, lon_2):
-    from math import sin, cos, sqrt, atan2, radians
-    # approximate radius of earth in km
-    R = 6373.0
-    lat1 = radians(lat_1)
-    lon1 = radians(lon_1)
-    lat2 = radians(lat_2)
-    lon2 = radians(lon_2)
-    dlon = lon2 - lon1
-    dlat = lat2 - lat1
-    a = sin(dlat / 2) ** 2 + cos(lat1) * cos(lat2) * sin(dlon / 2) ** 2
+def haversine_formula(lat_1, lon_1, lat_2, lon_2):
+    """ https://www.movable-type.co.uk/scripts/latlong.html """
+    from math import sin, cos, sqrt, atan2
+    difference_latitude = lat_1 - lat_2
+    difference_longitude = lon_1 - lon_2
+    a = sin(difference_latitude / 2) ** 2 + cos(lat_1) * cos(lat_2) * sin(difference_longitude / 2) ** 2
     c = 2 * atan2(sqrt(a), sqrt(1 - a))
-    distance = R * c
-    return distance
+    return R * c
+
+
+def calculate_distance_between_two_coordinates(lat_1, lon_1, lat_2, lon_2):
+    from math import radians
+    lat_1, lon_1 = radians(lat_1), radians(lon_1)
+    lat_2, lon_2 = radians(lat_2), radians(lon_2)
+    return haversine_formula(lat_1, lon_1, lat_2, lon_2)

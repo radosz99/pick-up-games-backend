@@ -20,12 +20,7 @@ class CourtViewSet(ModelViewSet):
     http_method_names = ['get', 'post', 'delete']
 
     def list(self, request, *args, **kwargs):
-        queryset = Court.objects.all()
-        latitude = float(request.query_params.get('lat'))
-        longitude = float(request.query_params.get('lon'))
-        serializer = self.get_serializer(queryset, many=True, context={'lat': latitude, 'lon': longitude})
-        serializer_data = sorted(
-            serializer.data, key=lambda k: k['distance'], reverse=False)
+        serializer_data = court_service.get_courts_list(request, self.serializer_class)
         page = self.paginate_queryset(serializer_data)
         return self.get_paginated_response(page)
 

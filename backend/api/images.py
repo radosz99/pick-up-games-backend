@@ -10,7 +10,6 @@ class MyModelViewSet(ModelViewSet):
     parser_classes = (MultiPartParser, FormParser)
     permission_classes = [
         permissions.IsAuthenticatedOrReadOnly]
-
     http_method_names = ['get']
 
     def perform_create(self, serializer):

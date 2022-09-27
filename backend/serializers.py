@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import Court, Address, CourtDetails, PlayingTimeFrame, CourtImage
-from .services.court_service import convert_unix_timestamp_to_date, calculate_distance
+from .services.court_service import convert_unix_timestamp_to_date, calculate_distance_between_two_coordinates
 import logging
 
 
@@ -28,14 +28,15 @@ class CourtSerializer(serializers.ModelSerializer):
     details = CourtDetailsSerializer()
     distance = serializers.SerializerMethodField('calculate_distance')
 
-    def calculate_distance(self, obj):
-        latitude = self.context.get('lat')
-        longitude = self.context.get('lon')
+    def calculate_distance(self, court):
+        latitude, longitude = self.context.get('lat'), self.context.get('lon')
         if latitude is None or longitude is None:
             return 0
-        court_latitude = obj.address.latitude
-        court_longitude = obj.address.longitude
-        return calculate_distance(latitude, longitude, court_latitude, court_longitude)
+        else:
+            return calculate_distance_between_two_coordinates(latitude,
+                                                              longitude,
+                                                              court.address.latitude,
+                                                              court.address.longitude)
 
     class Meta:
         model = Court
