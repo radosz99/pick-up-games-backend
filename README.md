@@ -26,7 +26,7 @@ api_path = `/api/v1/court/?page=1&page_size=3&lat=56&lon=16.8`
 method = `GET`
 
 Parameter `distance` in response in each court object contains the distance from a court to the given coordinates in straight line.  
-Note: If `lat` or `lon` parameters are not included, the list of courts is sorted randomly and the `distance` parameter is set to `0`.
+Note: If `lat` or `lon` parameters are not included, the list of courts is sorted randomly and the `distance` parameter is set to `-1`.
 
 ## Get specific court
 api_path = `/api/v1/court/<id>/`  

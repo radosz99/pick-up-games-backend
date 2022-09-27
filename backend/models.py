@@ -5,11 +5,11 @@ from django.db import models
 class Address(models.Model):
     country = models.CharField(max_length=50)  # consider Enum for countries
     city = models.CharField(max_length=30)
-    street_name = models.CharField(max_length=30)
+    street_name = models.CharField(max_length=30, blank=True)
     postal_code = models.CharField(max_length=10)
     latitude = models.FloatField()
     longitude = models.FloatField()
-    street_number = models.CharField(max_length=20)
+    street_number = models.CharField(max_length=20, blank=True)
 
     def __str__(self):
         return str(self.__dict__)
@@ -43,7 +43,6 @@ class CourtDetails(models.Model):
     type = models.CharField(choices=CourtType.choices, default=CourtType.OUTDOOR, max_length=10)
     public = models.BooleanField(default=True)
     rim_type = models.CharField(choices=RimType.choices, default=RimType.NORMAL, max_length=10)
-
 
     def __str__(self):
         return str(self.__dict__)
