@@ -148,7 +148,7 @@ LOGGING = {
     'disable_existing_loggers': False,
     'formatters': {
         'basic': {
-            'format': '{asctime} {module} ({lineno}) - {message}',
+            'format': '{levelname} [{filename}:{lineno} - {asctime} ] - {message}',
             'style': '{',
         },
     },
@@ -174,9 +174,16 @@ LOGGING = {
             'mode': 'w',
             'formatter': 'basic'
         },
+        'info_file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': 'info.log',
+            'mode': 'w',
+            'formatter': 'basic'
+        },
     },
     'root': {
-        'handlers': ['debug_file'],
+        'handlers': ['debug_file', 'error_file', 'info_file'],
         'level': 'DEBUG',
     },
     'loggers': {
@@ -184,10 +191,6 @@ LOGGING = {
             'handlers': ['file'],
             'level': 'DEBUG',
             'propagate': False
-        },
-        'error_logger': {
-            'handlers': ['error_file'],
-            'level': 'ERROR',
         }
     },
 }

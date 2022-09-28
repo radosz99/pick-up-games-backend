@@ -50,10 +50,9 @@ class CourtDetails(models.Model):
 
 class Court(models.Model):
     name = models.CharField(max_length=100)
-    address = models.ForeignKey(Address, on_delete=models.CASCADE, null=True, blank=True, related_name='court_address')
-    details = models.ForeignKey(CourtDetails, on_delete=models.CASCADE, null=True, blank=True, related_name='court_details')
+    address = models.ForeignKey(Address, on_delete=models.CASCADE, null=True, blank=True, related_name='court')
+    details = models.ForeignKey(CourtDetails, on_delete=models.CASCADE, null=True, blank=True, related_name='court')
     created = models.DateTimeField(default=django.utils.timezone.now)
-    expected_players_number = models.IntegerField(default=0)
     actual_players_number = models.IntegerField(default=0)
 
     def __str__(self):
@@ -66,6 +65,7 @@ class PlayingTimeFrame(models.Model):
     player_nick = models.CharField(max_length=20)
     court = models.ForeignKey(Court, on_delete=models.CASCADE, related_name='timeframes')
     created = models.DateTimeField(default=django.utils.timezone.now)
+    finished = models.BooleanField(blank=True, default=False)
 
     def __str__(self):
         return str(self.__dict__)

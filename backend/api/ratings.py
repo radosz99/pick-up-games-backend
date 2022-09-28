@@ -4,7 +4,7 @@ from rest_framework import status
 
 from ..models import Rating
 from ..serializers import RatingSerializer
-from ..services import request_utils, court_service
+from ..services.request_utils import validate_ip, ValidationType
 
 
 class RatingViewSet(ModelViewSet):
@@ -12,7 +12,7 @@ class RatingViewSet(ModelViewSet):
     queryset = Rating.objects.all()
     http_method_names = ['get', 'post']
 
-    @request_utils.validate_ip(model=Rating)
+    @validate_ip(model=Rating, validation_type=ValidationType.AMOUNT, value=1)
     def create(self, request, *args, **kwargs):
         request.data['user_ip'] = kwargs['ip']
         serializer = self.get_serializer(data=request.data)

@@ -131,3 +131,44 @@ body:
     "court": 1
 }
 ```
+
+## Insert comment
+api_path = `/api/v1/comment/`
+method = `POST`
+body:
+```
+{
+    "content": "nice court",
+    "court": 1
+}
+```
+
+## Get comment for specific court with pagination
+exemplary_api_path = `/api/v1/comment/?court_id=36&page=1&page_size=1`  
+method = `GET`
+
+
+## IP validation for comment and rating
+Two IP validation methods have been implemented and can be used together or separately.
+### By maximum amount
+Using validation decorator:
+```
+@validate_ip(model=Rating, validation_type=ValidationType.AMOUNT, value=1)
+```
+Specific response can be returned:
+```
+{
+    "detail": "IP validation not successful, total number (1) of Rating objects created in database from ip = 172.20.0.1 for court_id = 36 has exceeded or is equal to maximum allowed (1)"
+}
+```
+### By minimal elapsed time
+Using validation decorator:
+```
+@validate_ip(model=Comment, validation_type=ValidationType.TIME_ELAPSED, value=timedelta(minutes=1))
+```
+Specific response can be returned:
+```
+{
+    "detail": "IP validation not successful, last created Comment object from ip 172.20.0.1 for court_id = 36 had been created on 2022-09-28 12:43:03.714972+00:00, only 0:00:13.222064 time has elapsed till now (2022-09-28 12:43:16.937036+00:00) and minimum is = 0:01:00"
+}
+```

@@ -1,15 +1,15 @@
+import logging
+import traceback
+
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework import status
 
-import traceback
-
 from ..models import Court
 from ..serializers import CourtSerializer
 from ..services import court_service, image_service
 from ..pagination import StandardResultsSetPagination
-from .. import logger
 
 
 class CourtViewSet(ModelViewSet):
@@ -24,7 +24,7 @@ class CourtViewSet(ModelViewSet):
             page = self.paginate_queryset(serializer_data)
             return self.get_paginated_response(page)
         except Exception as e:
-            logger.error(traceback.format_exc())
+            logging.error(traceback.format_exc())
             return Response({"detail": str(e), "exception": e.__class__.__name__}, status=status.HTTP_400_BAD_REQUEST)
 
     def retrieve(self, request, *args, **kwargs):
@@ -38,7 +38,7 @@ class CourtViewSet(ModelViewSet):
             data = court_service.get_timeframes_frequency(pk, request)
             return Response(data)
         except Exception as e:
-            logger.error(traceback.format_exc())
+            logging.error(traceback.format_exc())
             return Response({"detail": str(e), "exception": e.__class__.__name__}, status=status.HTTP_400_BAD_REQUEST)
 
     @action(detail=True, url_path='images', methods=['get'])
