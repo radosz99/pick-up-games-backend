@@ -76,6 +76,13 @@ body:
 }
 ```
 
+## Get court images
+api_path = `/api/v1/court/<court_id>/images`  
+method = `GET`
+
+## Insert image
+TODO
+
 ## Get court details choices
 ### Surface
 api_path = `/api/v1/surface`  

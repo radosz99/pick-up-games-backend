@@ -43,8 +43,12 @@ class CourtViewSet(ModelViewSet):
 
     @action(detail=True, url_path='images', methods=['get'])
     def get_images(self, request, pk=None):
-        data = image_service.get_court_images(pk)
-        return Response(data)
+        try:
+            data = image_service.get_court_images(pk)
+            return Response(data)
+        except Exception as e:
+            logging.error(traceback.format_exc())
+            return Response({"detail": str(e), "exception": e.__class__.__name__}, status=status.HTTP_400_BAD_REQUEST)
 
     def destroy(self, *args, **kwargs):
         serializer = self.get_serializer(self.get_object())

@@ -91,7 +91,7 @@ def upload_to(instance, filename):
 
 class CourtImage(models.Model):
     image = models.ImageField(upload_to=upload_to)
-    court = models.ForeignKey(Court, on_delete=models.CASCADE)
+    court = models.ForeignKey(Court, on_delete=models.CASCADE, related_name='images')
 
 
 
