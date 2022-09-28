@@ -148,8 +148,14 @@ exemplary_api_path = `/api/v1/comment/?court_id=36&page=1&page_size=1`
 method = `GET`
 
 
-## IP validation for comment and rating
-Two IP validation methods have been implemented and can be used together or separately.
+## IP validation 
+Two IP validation methods have been implemented and can be used together or separately. They are checking if model (which has `Court` object) has not been created with specific court from given IP either too many times (`AMOUNT` validation) or recently (`ELAPSED_TIME` validation).  
+
+Can be used for:
+- Rating, 
+- Comment,
+- Timeframe.
+
 ### By maximum amount
 Using validation decorator:
 ```
@@ -158,7 +164,8 @@ Using validation decorator:
 Specific response can be returned:
 ```
 {
-    "detail": "IP validation not successful, total number (1) of Rating objects created in database from ip = 172.20.0.1 for court_id = 36 has exceeded or is equal to maximum allowed (1)"
+    "detail": "IP validation not successful, total number (1) of Rating objects created in database from ip = 172.20.0.1 for court_id = 36 has exceeded or is equal to maximum allowed (1)",
+    "exception": "TooManyRequestsFromIpException"
 }
 ```
 ### By minimal elapsed time
@@ -169,6 +176,7 @@ Using validation decorator:
 Specific response can be returned:
 ```
 {
-    "detail": "IP validation not successful, last created Comment object from ip 172.20.0.1 for court_id = 36 had been created on 2022-09-28 12:43:03.714972+00:00, only 0:00:13.222064 time has elapsed till now (2022-09-28 12:43:16.937036+00:00) and minimum is = 0:01:00"
+    "detail": "IP validation not successful, last created Comment object from ip 172.20.0.1 for court_id = 36 had been created on 2022-09-28 12:43:03.714972+00:00, only 0:00:13.222064 time has elapsed till now (2022-09-28 12:43:16.937036+00:00) and minimum is = 0:01:00",
+    "exception": "TooManyRequestsFromIpException"
 }
 ```
