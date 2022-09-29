@@ -4,7 +4,7 @@ from .api.courts import CourtViewSet
 from .api.timeframes import PlayingTimeFrameViewSet
 from .api.ratings import RatingViewSet
 from .api.comments import CommentViewSet
-from .api.court_details import SurfaceChoicesListView, RimTypeChoicesListView, CourtTypeChoicesListView
+from .api.court_details import CourtDetailsChoicesListView
 
 router = DefaultRouter()
 router.register(r'court', CourtViewSet, basename='court')
@@ -14,7 +14,5 @@ router.register(r'comment', CommentViewSet, basename='comment')
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('court_details/surface', SurfaceChoicesListView.as_view()),
-    path('court_details/type', CourtTypeChoicesListView.as_view()),
-    path('court_details/rim', RimTypeChoicesListView.as_view()),
+    path('court_details/choices', CourtDetailsChoicesListView.as_view()),
 ]

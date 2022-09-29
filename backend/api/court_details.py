@@ -3,19 +3,15 @@ from rest_framework.response import Response
 from ..models import CourtDetails
 
 
-class SurfaceChoicesListView(APIView):
+class CourtDetailsChoicesListView(APIView):
     def get(self, request):
-        choices = {counter: choice[1] for counter, choice in enumerate(CourtDetails.SurfaceType.choices)}
+        surface_choices = {counter: choice[1] for counter, choice in enumerate(CourtDetails.SurfaceType.choices)}
+        rim_choices = {counter: choice[1] for counter, choice in enumerate(CourtDetails.RimType.choices)}
+        court_choices = {counter: choice[1] for counter, choice in enumerate(CourtDetails.CourtType.choices)}
+        choices = {
+            "rim_type": rim_choices,
+            "court_type": court_choices,
+            "surface_type": surface_choices
+        }
         return Response(choices)
 
-
-class RimTypeChoicesListView(APIView):
-    def get(self, request):
-        choices = {counter: choice[1] for counter, choice in enumerate(CourtDetails.RimType.choices)}
-        return Response(choices)
-
-
-class CourtTypeChoicesListView(APIView):
-    def get(self, request):
-        choices = {counter: choice[1] for counter, choice in enumerate(CourtDetails.CourtType.choices)}
-        return Response(choices)
