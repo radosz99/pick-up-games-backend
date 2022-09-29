@@ -1,4 +1,4 @@
-# API link
+# API url
 ```
 https://backend.matcher.pl/api/v1/
 ```
@@ -84,18 +84,33 @@ method = `GET`
 TODO
 
 ## Get court details choices
-### Surface
-api_path = `/api/v1/court_details/surface`  
-method = `GET`
-
-### Rim type
-api_path = `/api/v1/court_details/rim`  
-method = `GET`
-
-### Court type
-api_path = `/api/v1/court_details/type`  
-method = `GET`
-
+api_path = `api/v1/court_details/choices`  
+method = `GET`  
+response:
+```
+{
+  "rim_type": {
+    "0": "Higher",
+    "1": "Lower",
+    "2": "Normal",
+    "3": "Various"
+  },
+  "court_type": {
+    "0": "Indoor",
+    "1": "Outdoor"
+  },
+  "surface_type": {
+    "0": "Cement",
+    "1": "Concrete",
+    "2": "Dirt",
+    "3": "Grass",
+    "4": "Plastic",
+    "5": "Rubber",
+    "6": "Wood",
+    "7": "Other"
+  }
+}
+```
 
 ## Insert timeframe
 api_path = `/api/v1/timeframe/`  
