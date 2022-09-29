@@ -34,6 +34,8 @@ class RatingSerializer(serializers.ModelSerializer):
         logging.debug(f"Creating rating from - {validated_data}")
         stars = validated_data.pop('stars')
         court = validated_data.pop('court')
+        if stars > 5.0:
+            raise serializers.ValidationError("Rating can not exceed maximum which is 5.0")
         court_instance = Rating.objects.create(stars=stars, court_id=court.id, **validated_data)
         return court_instance
 
