@@ -85,15 +85,15 @@ TODO
 
 ## Get court details choices
 ### Surface
-api_path = `/api/v1/surface`  
+api_path = `/api/v1/court_details/surface`  
 method = `GET`
 
 ### Rim type
-api_path = `/api/v1/rim`  
+api_path = `/api/v1/court_details/rim`  
 method = `GET`
 
 ### Court type
-api_path = `/api/v1/type`  
+api_path = `/api/v1/court_details/type`  
 method = `GET`
 
 
