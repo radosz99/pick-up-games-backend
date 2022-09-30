@@ -4,10 +4,14 @@ from ..models import CourtDetails
 
 
 class CourtDetailsChoicesListView(APIView):
+    @staticmethod
+    def get_list_of_choices(model):
+        return [choice[1] for choice in model.choices]
+
     def get(self, request):
-        surface_choices = {counter: choice[1] for counter, choice in enumerate(CourtDetails.SurfaceType.choices)}
-        rim_choices = {counter: choice[1] for counter, choice in enumerate(CourtDetails.RimType.choices)}
-        court_choices = {counter: choice[1] for counter, choice in enumerate(CourtDetails.CourtType.choices)}
+        surface_choices = self.get_list_of_choices(CourtDetails.SurfaceType)
+        rim_choices = self.get_list_of_choices(CourtDetails.RimType)
+        court_choices = self.get_list_of_choices(CourtDetails.CourtType)
         choices = {
             "rim_type": rim_choices,
             "court_type": court_choices,
