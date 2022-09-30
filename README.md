@@ -89,26 +89,26 @@ method = `GET`
 response:
 ```
 {
-  "rim_type": {
-    "0": "Higher",
-    "1": "Lower",
-    "2": "Normal",
-    "3": "Various"
-  },
-  "court_type": {
-    "0": "Indoor",
-    "1": "Outdoor"
-  },
-  "surface_type": {
-    "0": "Cement",
-    "1": "Concrete",
-    "2": "Dirt",
-    "3": "Grass",
-    "4": "Plastic",
-    "5": "Rubber",
-    "6": "Wood",
-    "7": "Other"
-  }
+    "rim_type": [
+        "Higher",
+        "Lower",
+        "Normal",
+        "Various"
+    ],
+    "court_type": [
+        "Indoor",
+        "Outdoor"
+    ],
+    "surface_type": [
+        "Cement",
+        "Concrete",
+        "Dirt",
+        "Grass",
+        "Plastic",
+        "Rubber",
+        "Wood",
+        "Other"
+    ]
 }
 ```
 
